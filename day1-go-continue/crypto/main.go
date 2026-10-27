@@ -34,9 +34,15 @@ type ProviderData struct {
 }
 
 func FindArb() {
+	n := 0
 	for {
-		LoopArb()
-		time.Sleep(100 * time.Millisecond)
+		n += 1
+		fmt.Print(n, " - ")
+		func() {
+			start := time.Now()
+			LoopArb()
+			defer fmt.Println(" - ", time.Since(start))
+		}()
 	}
 }
 
@@ -121,6 +127,6 @@ func LoopArb() {
 		fmt.Println("profit", maxPrice-minPrice)
 		fmt.Println("profit percentage", (maxPrice-minPrice)/minPrice*100, "%")
 	} else {
-		fmt.Println("No arb opportunity found")
+		fmt.Print("No arb opportunity found")
 	}
 }
